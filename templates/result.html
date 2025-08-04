@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>診断結果：{{ constellation.name_jp }}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome (アイコン表示用) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #fdfaf6;
+            color: #5d5d5d;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px 40px 40px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-family: 'Kiwi Maru', serif;
+            color: #d5a6bd;
+            font-size: 2.8em;
+            margin: 0;
+        }
+        .header p {
+            font-size: 1.1em;
+            color: #aaa;
+        }
+        
+        /* 各情報セクションのスタイル */
+        .info-section {
+            margin-bottom: 30px;
+        }
+        .info-section h2 {
+            font-family: 'Kiwi Maru', serif;
+            font-size: 1.4em;
+            font-weight: 500;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f3e5eb;
+            color: #b98cae;
+        }
+        .info-section p {
+            white-space: pre-wrap; /* 改行とスペースをそのまま表示 */
+            line-height: 1.8;
+            padding: 10px;
+            margin: 0;
+        }
+
+        /* プランへ進むボタン */
+        .button-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .btn-plan {
+            font-family: 'Kiwi Maru', serif;
+            background: linear-gradient(135deg, #e8b3cf, #d5a6bd);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(213, 166, 189, 0.4);
+            display: inline-block;
+        }
+        .btn-plan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(213, 166, 189, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <p>あなたにぴったりの星座は...</p>
+            <h1>{{ constellation.name_jp }}</h1>
+        </div>
+
+        {% if constellation %}
+        
+        <!-- 「どんな星座？」セクション -->
+        <div class="info-section">
+            <h2>どんな星座？ (あなたとの共通点)</h2>
+            <p>{{ constellation.MBTI }}</p>
+        </div>
+
+        <!-- 「人生観」セクション -->
+        <div class="info-section">
+            <h2>人生観</h2>
+            <p>{{ constellation.人生観 }}</p>
+        </div>
+
+        <!-- 「おすすめの旅行先」セクション -->
+        <div class="info-section">
+            <h2>おすすめの旅行先</h2>
+            <p>{{ constellation.ロケーション }}</p>
+        </div>
+        
+        <div class="button-container">
+            <a href="{{ url_for('plan', constellation_name=constellation.name_jp) }}" class="btn-plan">
+                <i class="fa-solid fa-paper-plane"></i> この星座の旅行プランを見る
+            </a>
+        </div>
+
+        {% else %}
+        <p>診断結果が見つかりませんでした。</p>
+        {% endif %}
+    </div>
+</body>
+</html>

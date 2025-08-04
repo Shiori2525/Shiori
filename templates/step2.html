@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなただけの星座探し - Step 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>星詠みトラベル</h1>
+        <div class="card">
+            <h2>STEP 2: 好きな季節は？</h2>
+            <p>あなたのMBTI: <strong>{{ user_mbti }}</strong></p>
+            <form action="/step3" method="post">
+                <input type="hidden" name="user_mbti" value="{{ user_mbti }}">
+                <input type="hidden" name="candidates" value="{{ candidates }}">
+                
+                <div class="season-grid">
+                    <div class="season-option">
+                        <input type="radio" id="spring" name="season" value="春" required>
+                        <label for="spring">🌸 春</label>
+                    </div>
+                    <div class="season-option">
+                        <input type="radio" id="summer" name="season" value="夏" required>
+                        <label for="summer">☀️ 夏</label>
+                    </div>
+                    <div class="season-option">
+                        <input type="radio" id="autumn" name="season" value="秋" required>
+                        <label for="autumn">🍁 秋</label>
+                    </div>
+                    <div class="season-option">
+                        <input type="radio" id="winter" name="season" value="冬" required>
+                        <label for="winter">❄️ 冬</label>
+                    </div>
+                    <div class="season-option full-width">
+                        <input type="radio" id="overseas" name="season" value="海外" required>
+                        <label for="overseas">🔭 海外で特別な星空を見たい</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">次のステップへ</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

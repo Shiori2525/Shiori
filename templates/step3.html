@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなただけの星座探し - Step 3</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>星詠みトラベル</h1>
+        <div class="card">
+            <h2>STEP 3: しっくりくる人生観は？</h2>
+            <p>これらの星座の中から、あなたの心に響く言葉を選んでください。</p>
+            <form action="/result" method="post">
+                <input type="hidden" name="season_candidates" value="{{ season_candidates }}">
+                
+                <div class="life-view-options">
+                    {% for view in life_views %}
+                    <div class="life-view-option">
+                        <input type="radio" id="{{ view }}" name="life_view" value="{{ view }}" required>
+                        <label for="{{ view }}">{{ view }}</label>
+                    </div>
+                    {% else %}
+                    <p>この条件に合う星座は見つかりませんでした。前のページに戻って条件を変えてみてください。</p>
+                    {% endfor %}
+                </div>
+                
+                {% if life_views %}
+                <button type="submit" class="btn">結果を見る</button>
+                {% endif %}
+                <a href="/" class="back-link">最初からやり直す</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

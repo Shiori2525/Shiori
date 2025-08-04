@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ constellation.name_jp }} 旅行プラン</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome (アイコン表示用) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* --- 全体のスタイル --- */
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #fdfaf6; /* 少し温かみのある白 */
+            color: #5d5d5d;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px 40px 40px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+        }
+
+        /* --- ヘッダー --- */
+        h1 {
+            font-family: 'Kiwi Maru', serif;
+            color: #d5a6bd; /* 優雅なピンク色 */
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        .constellation-info {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        /* --- タイムライン --- */
+        .day-plan {
+            margin-bottom: 50px;
+        }
+        .day-header {
+            font-family: 'Kiwi Maru', serif;
+            font-size: 2em;
+            color: #d5a6bd;
+            font-weight: 500;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #f3e5eb;
+            padding-bottom: 10px;
+        }
+        .timeline {
+            list-style: none;
+            padding: 0;
+            position: relative;
+        }
+        /* タイムラインの縦線 */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 20px; /* アイコンの中心に合わせる */
+            bottom: 10px;
+            width: 3px;
+            background-color: #f3e5eb;
+            border-radius: 2px;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .timeline-time {
+            font-weight: 500;
+            width: 60px;
+            text-align: right;
+            margin-right: 25px;
+            font-size: 0.9em;
+            color: #888;
+            flex-shrink: 0; /* 時間が縮まないように */
+        }
+        .timeline-icon {
+            width: 44px;
+            height: 44px;
+            background-color: #d5a6bd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            position: relative;
+            border: 4px solid #fff;
+            z-index: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .timeline-content {
+            background-color: #fdfdfd;
+            padding: 15px 20px;
+            border-radius: 8px;
+            flex-grow: 1;
+            margin-left: 20px;
+            border: 1px solid #f0f0f0;
+        }
+        .timeline-content p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* --- プレイリストボタン & コンテナ --- */
+        .button-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        #generate-playlist-btn {
+            font-family: 'Kiwi Maru', serif;
+            background: linear-gradient(135deg, #e8b3cf, #d5a6bd);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(213, 166, 189, 0.4);
+        }
+        #generate-playlist-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(213, 166, 189, 0.5);
+        }
+        #playlist-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #f3e5eb;
+        }
+        #playlist-container h4 {
+            color: #d5a6bd;
+            text-align: center;
+            margin-top: 0;
+        }
+        #playlist-container ul {
+            list-style: none;
+            padding: 0;
+        }
+        #playlist-container li a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #f3e5eb;
+            text-decoration: none;
+            color: inherit;
+            transition: background-color 0.2s ease-in-out;
+            border-radius: 4px;
+        }
+        #playlist-container li:last-child a {
+            border-bottom: none;
+        }
+        #playlist-container li a:hover {
+            background-color: #fdf6f9;
+        }
+        #playlist-container .artist {
+            font-weight: bold;
+            color: #777;
+            flex-basis: 200px; /* アーティスト名の表示エリア幅を固定 */
+            flex-shrink: 0; /* 幅が縮まないように設定 */
+        }
+        #playlist-container .title {
+            flex-grow: 1;
+            padding: 0 15px;
+            text-align: left; /* テキストを左揃えに変更 */
+        }
+        #playlist-container .fa-youtube {
+            color: #ff0000;
+            font-size: 1.5em;
+            margin-left: 15px;
+        }
+
+        /* --- エラー表示 --- */
+        .error-box {
+            background-color: #fff0f0;
+            border: 1px solid #ffdddd;
+            color: #d8000c;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .error-box pre {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap; /* 長いテキストでも折り返す */
+            word-wrap: break-word;
+        }
+
+        /* --- ここからが修正箇所 --- */
+        /* トップページに戻るボタン */
+        .home-button-container {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #f3e5eb;
+        }
+        .btn-home {
+            font-family: 'Kiwi Maru', serif;
+            background-color: #fff;
+            color: #b98cae;
+            border: 2px solid #e8b3cf;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .btn-home:hover {
+            background-color: #fdf6f9;
+            transform: translateY(-2px);
+        }
+        /* --- ここまでが修正箇所 --- */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ constellation.name_jp }}への旅</h1>
+        <p class="constellation-info">{{ constellation.期間 }} | {{ constellation.MBTI.split('（')[0] }}</p>
+
+        <!-- AIが生成したプランを表示 -->
+        {% if plan_data and not plan_data.error %}
+            {% for day_data in plan_data.plan %}
+            <div class="day-plan">
+                <h2 class="day-header">Day {{ day_data.day }}</h2>
+                <ul class="timeline">
+                    {% for activity in day_data.activities %}
+                    <li class="timeline-item">
+                        <div class="timeline-time">{{ activity.time }}</div>
+                        <div class="timeline-icon">
+                            {% if activity.icon == 'train' %}<i class="fa-solid fa-train-subway"></i>
+                            {% elif activity.icon == 'plane' %}<i class="fa-solid fa-plane-departure"></i>
+                            {% elif activity.icon == 'bus' %}<i class="fa-solid fa-bus-simple"></i>
+                            {% elif activity.icon == 'temple' or activity.icon == 'shrine' %}<i class="fa-solid fa-torii-gate"></i>
+                            {% elif activity.icon == 'castle' %}<i class="fa-solid fa-chess-rook"></i>
+                            {% elif activity.icon == 'park' or activity.icon == 'nature' %}<i class="fa-solid fa-leaf"></i>
+                            {% elif activity.icon == 'walk' %}<i class="fa-solid fa-person-walking"></i>
+                            {% elif activity.icon == 'lunch' or activity.icon == 'dinner' %}<i class="fa-solid fa-utensils"></i>
+                            {% elif activity.icon == 'cafe' %}<i class="fa-solid fa-mug-hot"></i>
+                            {% elif activity.icon == 'hotel' %}<i class="fa-solid fa-bed"></i>
+                            {% elif activity.icon == 'shopping' %}<i class="fa-solid fa-bag-shopping"></i>
+                            {% elif activity.icon == 'museum' or activity.icon == 'art' %}<i class="fa-solid fa-palette"></i>
+                            {% elif activity.icon == 'star' %}<i class="fa-solid fa-star"></i>
+                            {% else %}<i class="fa-solid fa-map-pin"></i>
+                            {% endif %}
+                        </div>
+                        <div class="timeline-content">
+                            <p>{{ activity.description }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        {% else %}
+            <!-- エラーが発生した場合の表示 -->
+            <div class="error-box">
+                <h4>プランの生成に失敗しました</h4>
+                <p>{{ plan_data.error }}</p>
+                {% if plan_data.raw_text %}
+                    <p>AIからの応答:</p>
+                    <pre>{{ plan_data.raw_text }}</pre>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+        <!-- プレイリスト生成ボタン -->
+        <div class="button-container">
+            <button id="generate-playlist-btn" data-constellation='{{ constellation | tojson | safe }}'>
+                <i class="fa-solid fa-music"></i> 旅のBGMを提案してもらう
+            </button>
+            <div id="playlist-container"></div>
+        </div>
+
+        <!-- トップページに戻るボタン -->
+        <div class="home-button-container">
+            <a href="{{ url_for('index') }}" class="btn-home">
+                <i class="fa-solid fa-house"></i> トップページに戻る
+            </a>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.getElementById('generate-playlist-btn').addEventListener('click', function() {
+            // ボタンから星座データを取得
+            const constellationData = JSON.parse(this.dataset.constellation);
+            const playlistContainer = document.getElementById('playlist-container');
+            
+            // ローディング表示
+            playlistContainer.innerHTML = '<p>BGMを生成中...</p>';
+
+            // サーバーにプレイリスト生成をリクエスト
+            fetch('/generate_playlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ constellation: constellationData }) 
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 結果を表示
+                playlistContainer.innerHTML = data.playlist;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                playlistContainer.innerHTML = '<p>BGMの生成に失敗しました。</p>';
+            });
+        });
+    </script>
+</body>
+</html>

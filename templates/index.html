@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星詠みトラベル - あなただけの旅を見つける性格診断</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome (アイコン表示用) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #eef2f5; /* 背景を少しグレーに */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 40px 50px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-family: 'Kiwi Maru', serif;
+            color: #333;
+            font-size: 2.5em;
+            margin: 0;
+            font-weight: 500;
+        }
+        .header p {
+            font-size: 1.1em;
+            color: #888;
+            margin-top: 10px;
+        }
+        
+        /* 注意書きのスタイル */
+        .info-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            line-height: 1.7;
+            color: #495057;
+        }
+        .info-box i {
+            margin-right: 8px;
+            color: #6c757d;
+        }
+
+        /* MBTI選択フォーム */
+        .mbti-form h2 {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .mbti-form h2::before, .mbti-form h2::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: #dee2e6;
+        }
+        .mbti-form h2::before {
+            left: 0;
+        }
+        .mbti-form h2::after {
+            right: 0;
+        }
+        .mbti-form h2 i {
+            margin-right: 10px;
+        }
+
+        .mbti-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .mbti-buttons button {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 500;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .mbti-buttons button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>星詠みトラベル</h1>
+            <p>あなただけの旅を見つける性格診断</p>
+        </div>
+
+        <div class="info-box">
+            <i class="fa-solid fa-circle-info"></i>
+            あなたにぴったりの星座は、ご自身のタイプから見つかることもあれば、思考のクセや価値観が似ている「気の合う」タイプの星座が見つかることも。星が示す、思いがけない旅の提案をお楽しみください。
+        </div>
+
+        <form action="{{ url_for('step2') }}" method="post" class="mbti-form">
+            {% for group_name, mbti_list in mbti_groups.items() %}
+                <h2><i class="fa-solid fa-user-astronaut"></i> {{ group_name }}</h2>
+                <div class="mbti-buttons">
+                    {% for mbti in mbti_list %}
+                        <button type="submit" name="mbti" value="{{ mbti }}">{{ mbti }}</button>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+</body>
+</html>
