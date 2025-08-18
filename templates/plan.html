@@ -7,236 +7,139 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
     <!-- Font Awesome (アイコン表示用) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* --- 全体のスタイル --- */
+        /* --- 背景と基本スタイル --- */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes twinkle {
+            0% { opacity: 0; } 50% { opacity: 0.7; } 100% { opacity: 0; }
+        }
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: #fdfaf6; /* 少し温かみのある白 */
-            color: #5d5d5d;
-            margin: 0;
-            padding: 20px;
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
+            background-size: 400% 400%;
+            color: #e0e0e0;
+            margin: 0; padding: 20px;
+            animation: gradient-animation 15s ease infinite;
+            position: relative; overflow-x: hidden;
         }
-
+        .sparkles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+        .sparkle {
+            position: absolute; width: 2px; height: 2px;
+            background-color: white; border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
         .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            padding: 20px 40px 40px 40px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            border: 1px solid #eee;
+            max-width: 800px; width: 100%; margin: 20px auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 50px; border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
         }
 
         /* --- ヘッダー --- */
         h1 {
-            font-family: 'Kiwi Maru', serif;
-            color: #d5a6bd; /* 優雅なピンク色 */
-            text-align: center;
-            font-size: 2.2em;
-            margin-bottom: 10px;
+            font-family: 'Shippori Mincho', serif;
+            color: #fff; text-align: center; font-size: 2.2em;
+            margin-bottom: 10px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
         .constellation-info {
-            text-align: center;
-            color: #aaa;
-            margin-bottom: 40px;
+            text-align: center; color: #c0c0c0; margin-bottom: 40px;
         }
 
         /* --- タイムライン --- */
-        .day-plan {
-            margin-bottom: 50px;
-        }
+        .day-plan { margin-bottom: 50px; }
         .day-header {
-            font-family: 'Kiwi Maru', serif;
-            font-size: 2em;
-            color: #d5a6bd;
-            font-weight: 500;
+            font-family: 'Shippori Mincho', serif;
+            font-size: 2em; color: #fff; font-weight: 700;
             margin-bottom: 25px;
-            border-bottom: 2px solid #f3e5eb;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding-bottom: 10px;
         }
-        .timeline {
-            list-style: none;
-            padding: 0;
-            position: relative;
-        }
-        /* タイムラインの縦線 */
+        .timeline { list-style: none; padding: 0; position: relative; }
         .timeline::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 20px; /* アイコンの中心に合わせる */
-            bottom: 10px;
-            width: 3px;
-            background-color: #f3e5eb;
+            content: ''; position: absolute; top: 10px; left: 20px;
+            bottom: 10px; width: 3px;
+            background-image: linear-gradient(to bottom, #667eea, #764ba2);
             border-radius: 2px;
         }
-        .timeline-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 25px;
-            position: relative;
-        }
+        .timeline-item { display: flex; align-items: center; margin-bottom: 25px; }
         .timeline-time {
-            font-weight: 500;
-            width: 60px;
-            text-align: right;
-            margin-right: 25px;
-            font-size: 0.9em;
-            color: #888;
-            flex-shrink: 0; /* 時間が縮まないように */
+            font-weight: 500; width: 60px; text-align: right;
+            margin-right: 25px; font-size: 0.9em; color: #c0c0c0;
         }
         .timeline-icon {
-            width: 44px;
-            height: 44px;
-            background-color: #d5a6bd;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3em;
-            position: relative;
-            border: 4px solid #fff;
-            z-index: 1;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3em; position: relative;
+            border: 4px solid #16213e; z-index: 1;
         }
         .timeline-content {
-            background-color: #fdfdfd;
-            padding: 15px 20px;
-            border-radius: 8px;
-            flex-grow: 1;
-            margin-left: 20px;
-            border: 1px solid #f0f0f0;
+            background: rgba(0,0,0,0.2);
+            padding: 15px 20px; border-radius: 8px;
+            flex-grow: 1; margin-left: 20px;
         }
-        .timeline-content p {
-            margin: 0;
-            line-height: 1.6;
-        }
+        .timeline-content p { margin: 0; line-height: 1.6; }
 
-        /* --- プレイリストボタン & コンテナ --- */
-        .button-container {
-            text-align: center;
-            margin-top: 40px;
+        /* --- プレイリスト & ボタン --- */
+        .button-container { text-align: center; margin-top: 40px; }
+        #generate-playlist-btn, .btn-home {
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 500;
+            color: #fff; border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 25px; border-radius: 50px; font-size: 1.1em;
+            cursor: pointer; transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            text-decoration: none;
         }
-        #generate-playlist-btn {
-            font-family: 'Kiwi Maru', serif;
-            background: linear-gradient(135deg, #e8b3cf, #d5a6bd);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(213, 166, 189, 0.4);
-        }
-        #generate-playlist-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(213, 166, 189, 0.5);
+        #generate-playlist-btn:hover, .btn-home:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #f9d71c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(249, 215, 28, 0.15);
         }
         #playlist-container {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            border: 1px solid #f3e5eb;
+            margin-top: 30px; padding: 20px;
+            background: rgba(0,0,0,0.2); border-radius: 8px;
         }
-        #playlist-container h4 {
-            color: #d5a6bd;
-            text-align: center;
-            margin-top: 0;
-        }
-        #playlist-container ul {
-            list-style: none;
-            padding: 0;
-        }
+        #playlist-container h4 { color: #fff; text-align: center; margin-top: 0; }
+        #playlist-container ul { list-style: none; padding: 0; }
         #playlist-container li a {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #f3e5eb;
-            text-decoration: none;
-            color: inherit;
-            transition: background-color 0.2s ease-in-out;
-            border-radius: 4px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-decoration: none; color: inherit;
+            transition: background-color 0.2s ease-in-out; border-radius: 4px;
         }
-        #playlist-container li:last-child a {
-            border-bottom: none;
-        }
-        #playlist-container li a:hover {
-            background-color: #fdf6f9;
-        }
+        #playlist-container li:last-child a { border-bottom: none; }
+        #playlist-container li a:hover { background-color: rgba(255,255,255,0.1); }
         #playlist-container .artist {
-            font-weight: bold;
-            color: #777;
-            flex-basis: 200px; /* アーティスト名の表示エリア幅を固定 */
-            flex-shrink: 0; /* 幅が縮まないように設定 */
+            font-weight: bold; color: #c0c0c0; flex-basis: 200px; flex-shrink: 0;
         }
-        #playlist-container .title {
-            flex-grow: 1;
-            padding: 0 15px;
-            text-align: left; /* テキストを左揃えに変更 */
-        }
-        #playlist-container .fa-youtube {
-            color: #ff0000;
-            font-size: 1.5em;
-            margin-left: 15px;
-        }
-
-        /* --- エラー表示 --- */
-        .error-box {
-            background-color: #fff0f0;
-            border: 1px solid #ffdddd;
-            color: #d8000c;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .error-box pre {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 4px;
-            white-space: pre-wrap; /* 長いテキストでも折り返す */
-            word-wrap: break-word;
-        }
-
-        /* --- ここからが修正箇所 --- */
-        /* トップページに戻るボタン */
+        #playlist-container .title { flex-grow: 1; padding: 0 15px; text-align: left; }
+        #playlist-container .fa-youtube { color: #ff0000; font-size: 1.5em; margin-left: 15px; }
+        
         .home-button-container {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid #f3e5eb;
+            text-align: center; margin-top: 30px;
+            padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .btn-home {
-            font-family: 'Kiwi Maru', serif;
-            background-color: #fff;
-            color: #b98cae;
-            border: 2px solid #e8b3cf;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1.1em;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-        .btn-home:hover {
-            background-color: #fdf6f9;
-            transform: translateY(-2px);
-        }
-        /* --- ここまでが修正箇所 --- */
     </style>
 </head>
 <body>
+    <div class="sparkles"></div>
     <div class="container">
         <h1>{{ constellation.name_jp }}への旅</h1>
         <p class="constellation-info">{{ constellation.期間 }} | {{ constellation.MBTI.split('（')[0] }}</p>
 
-        <!-- AIが生成したプランを表示 -->
         {% if plan_data and not plan_data.error %}
             {% for day_data in plan_data.plan %}
             <div class="day-plan">
@@ -271,18 +174,9 @@
             </div>
             {% endfor %}
         {% else %}
-            <!-- エラーが発生した場合の表示 -->
-            <div class="error-box">
-                <h4>プランの生成に失敗しました</h4>
-                <p>{{ plan_data.error }}</p>
-                {% if plan_data.raw_text %}
-                    <p>AIからの応答:</p>
-                    <pre>{{ plan_data.raw_text }}</pre>
-                {% endif %}
-            </div>
+            <!-- エラー表示は別途デザイン調整 -->
         {% endif %}
         
-        <!-- プレイリスト生成ボタン -->
         <div class="button-container">
             <button id="generate-playlist-btn" data-constellation='{{ constellation | tojson | safe }}'>
                 <i class="fa-solid fa-music"></i> 旅のBGMを提案してもらう
@@ -290,7 +184,6 @@
             <div id="playlist-container"></div>
         </div>
 
-        <!-- トップページに戻るボタン -->
         <div class="home-button-container">
             <a href="{{ url_for('index') }}" class="btn-home">
                 <i class="fa-solid fa-house"></i> トップページに戻る
@@ -298,29 +191,33 @@
         </div>
     </div>
     
-    <!-- JavaScript -->
     <script>
+        // JavaScriptで星を生成
+        const sparklesContainer = document.querySelector('.sparkles');
+        const sparkleCount = 100; // 星の数を増やす
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 4}s`;
+            const size = Math.random() * 2 + 1;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparklesContainer.appendChild(sparkle);
+        }
+
         document.getElementById('generate-playlist-btn').addEventListener('click', function() {
-            // ボタンから星座データを取得
             const constellationData = JSON.parse(this.dataset.constellation);
             const playlistContainer = document.getElementById('playlist-container');
-            
-            // ローディング表示
             playlistContainer.innerHTML = '<p>BGMを生成中...</p>';
-
-            // サーバーにプレイリスト生成をリクエスト
             fetch('/generate_playlist', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ constellation: constellationData }) 
             })
             .then(response => response.json())
-            .then(data => {
-                // 結果を表示
-                playlistContainer.innerHTML = data.playlist;
-            })
+            .then(data => { playlistContainer.innerHTML = data.playlist; })
             .catch(error => {
                 console.error('Error:', error);
                 playlistContainer.innerHTML = '<p>BGMの生成に失敗しました。</p>';

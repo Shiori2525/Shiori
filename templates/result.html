@@ -7,86 +7,87 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
     <!-- Font Awesome (アイコン表示用) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
+        /* --- 背景と基本スタイル --- */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes twinkle {
+            0% { opacity: 0; } 50% { opacity: 0.7; } 100% { opacity: 0; }
+        }
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: #fdfaf6;
-            color: #5d5d5d;
-            margin: 0;
-            padding: 20px;
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
+            background-size: 400% 400%;
+            color: #e0e0e0;
+            margin: 0; padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            animation: gradient-animation 15s ease infinite;
+            position: relative; overflow: hidden;
+        }
+        .sparkles {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .sparkle {
+            position: absolute; width: 2px; height: 2px;
+            background-color: white; border-radius: 50%;
+            animation: twinkle 4s infinite;
         }
         .container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #ffffff;
-            padding: 20px 40px 40px 40px;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            border: 1px solid #eee;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .header h1 {
-            font-family: 'Kiwi Maru', serif;
-            color: #d5a6bd;
-            font-size: 2.8em;
-            margin: 0;
-        }
-        .header p {
-            font-size: 1.1em;
-            color: #aaa;
-        }
-        
-        /* 各情報セクションのスタイル */
-        .info-section {
-            margin-bottom: 30px;
-        }
-        .info-section h2 {
-            font-family: 'Kiwi Maru', serif;
-            font-size: 1.4em;
-            font-weight: 500;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f3e5eb;
-            color: #b98cae;
-        }
-        .info-section p {
-            white-space: pre-wrap; /* 改行とスペースをそのまま表示 */
-            line-height: 1.8;
-            padding: 10px;
-            margin: 0;
+            max-width: 800px; width: 100%; margin: 20px auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 50px; border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            position: relative; z-index: 1;
         }
 
-        /* プランへ進むボタン */
-        .button-container {
-            text-align: center;
-            margin-top: 40px;
+        /* --- コンテンツのスタイル --- */
+        .header { text-align: center; margin-bottom: 40px; }
+        .header p { font-size: 1.1em; color: #c0c0c0; margin-bottom: 10px; }
+        .header h1 {
+            font-family: 'Shippori Mincho', serif;
+            color: #fff; font-size: 3.2em; font-weight: 700;
+            margin: 0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
+        .info-section { margin-bottom: 30px; }
+        .info-section h2 {
+            font-family: 'Shippori Mincho', serif;
+            font-size: 1.4em; font-weight: 500;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        .info-section p {
+            white-space: pre-wrap; line-height: 1.8;
+            padding: 10px 0; margin: 0; color: #d0d0d0;
+        }
+        .button-container { text-align: center; margin-top: 40px; }
         .btn-plan {
-            font-family: 'Kiwi Maru', serif;
-            background: linear-gradient(135deg, #e8b3cf, #d5a6bd);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.2em;
-            cursor: pointer;
-            text-decoration: none;
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 500;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; border: none; padding: 15px 30px;
+            border-radius: 50px; font-size: 1.2em;
+            cursor: pointer; text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(213, 166, 189, 0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             display: inline-block;
         }
         .btn-plan:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(213, 166, 189, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
+    <div class="sparkles"></div>
     <div class="container">
         <div class="header">
             <p>あなたにぴったりの星座は...</p>
@@ -94,34 +95,43 @@
         </div>
 
         {% if constellation %}
-        
-        <!-- 「どんな星座？」セクション -->
         <div class="info-section">
             <h2>どんな星座？ (あなたとの共通点)</h2>
             <p>{{ constellation.MBTI }}</p>
         </div>
-
-        <!-- 「人生観」セクション -->
         <div class="info-section">
             <h2>人生観</h2>
             <p>{{ constellation.人生観 }}</p>
         </div>
-
-        <!-- 「おすすめの旅行先」セクション -->
         <div class="info-section">
             <h2>おすすめの旅行先</h2>
             <p>{{ constellation.ロケーション }}</p>
         </div>
-        
         <div class="button-container">
             <a href="{{ url_for('plan', constellation_name=constellation.name_jp) }}" class="btn-plan">
                 <i class="fa-solid fa-paper-plane"></i> この星座の旅行プランを見る
             </a>
         </div>
-
         {% else %}
         <p>診断結果が見つかりませんでした。</p>
         {% endif %}
     </div>
+
+    <script>
+        // JavaScriptで星を生成
+        const sparklesContainer = document.querySelector('.sparkles');
+        const sparkleCount = 50;
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 4}s`;
+            const size = Math.random() * 2 + 1;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparklesContainer.appendChild(sparkle);
+        }
+    </script>
 </body>
 </html>

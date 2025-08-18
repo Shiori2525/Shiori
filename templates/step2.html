@@ -3,45 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>あなただけの星座探し - Step 2</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>星詠みトラベル - STEP 2</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome (アイコン表示用) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* --- 背景と基本スタイル --- */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes twinkle {
+            0% { opacity: 0; } 50% { opacity: 0.7; } 100% { opacity: 0; }
+        }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533483);
+            background-size: 400% 400%;
+            color: #e0e0e0;
+            margin: 0; padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            animation: gradient-animation 15s ease infinite;
+            position: relative; overflow: hidden;
+        }
+        .sparkles {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .sparkle {
+            position: absolute; width: 2px; height: 2px;
+            background-color: white; border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+        .container {
+            max-width: 800px; width: 100%; margin: 20px auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 50px; border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            position: relative; z-index: 1; text-align: center;
+        }
+
+        /* --- コンテンツのスタイル --- */
+        h2 {
+            font-family: 'Shippori Mincho', serif;
+            color: #fff; font-size: 1.8em; font-weight: 700;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #c0c0c0; margin-bottom: 40px;
+        }
+        .season-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .season-btn, .special-btn, .submit-btn {
+            font-family: 'Noto Sans JP', sans-serif; font-weight: 500;
+            color: #fff; border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px; border-radius: 50px; font-size: 1.1em;
+            cursor: pointer; transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .season-btn:hover, .special-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #f9d71c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(249, 215, 28, 0.15);
+        }
+        .special-btn {
+            grid-column: 1 / -1; /* ボタンを横いっぱいに広げる */
+        }
+        .submit-btn {
+            width: 100%; margin-top: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
+    <div class="sparkles"></div>
     <div class="container">
-        <h1>星詠みトラベル</h1>
-        <div class="card">
-            <h2>STEP 2: 好きな季節は？</h2>
-            <p>あなたのMBTI: <strong>{{ user_mbti }}</strong></p>
-            <form action="/step3" method="post">
-                <input type="hidden" name="user_mbti" value="{{ user_mbti }}">
-                <input type="hidden" name="candidates" value="{{ candidates }}">
-                
-                <div class="season-grid">
-                    <div class="season-option">
-                        <input type="radio" id="spring" name="season" value="春" required>
-                        <label for="spring">🌸 春</label>
-                    </div>
-                    <div class="season-option">
-                        <input type="radio" id="summer" name="season" value="夏" required>
-                        <label for="summer">☀️ 夏</label>
-                    </div>
-                    <div class="season-option">
-                        <input type="radio" id="autumn" name="season" value="秋" required>
-                        <label for="autumn">🍁 秋</label>
-                    </div>
-                    <div class="season-option">
-                        <input type="radio" id="winter" name="season" value="冬" required>
-                        <label for="winter">❄️ 冬</label>
-                    </div>
-                    <div class="season-option full-width">
-                        <input type="radio" id="overseas" name="season" value="海外" required>
-                        <label for="overseas">🔭 海外で特別な星空を見たい</label>
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn">次のステップへ</button>
-            </form>
-        </div>
+        <h2>STEP 2: 好きな季節は？</h2>
+        <p>あなたのMBTI: {{ user_mbti }}</p>
+        
+        <form action="{{ url_for('step3') }}" method="post">
+            <input type="hidden" name="user_mbti" value="{{ user_mbti }}">
+            <input type="hidden" name="candidates" value="{{ candidates }}">
+            
+            <div class="season-buttons">
+                <button type="submit" name="season" value="春" class="season-btn"><i class="fa-solid fa-leaf"></i> 春</button>
+                <button type="submit" name="season" value="夏" class="season-btn"><i class="fa-solid fa-sun"></i> 夏</button>
+                <button type="submit" name="season" value="秋" class="season-btn"><i class="fa-solid fa-feather-alt"></i> 秋</button>
+                <button type="submit" name="season" value="冬" class="season-btn"><i class="fa-solid fa-snowflake"></i> 冬</button>
+            </div>
+            <button type="submit" name="season" value="海外" class="special-btn"><i class="fa-solid fa-globe"></i> 海外で特別な星空を見たい</button>
+        </form>
     </div>
+
+    <script>
+        // JavaScriptで星を生成
+        const sparklesContainer = document.querySelector('.sparkles');
+        const sparkleCount = 50;
+        for (let i = 0; i < sparkleCount; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 4}s`;
+            const size = Math.random() * 2 + 1;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparklesContainer.appendChild(sparkle);
+        }
+    </script>
 </body>
 </html>
