@@ -82,15 +82,12 @@
             color: #e0e0e0;
             margin: 0;
             padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             animation: gradient-animation 15s ease infinite;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden; /* 横スクロールのみを禁止 */
         }
 
+        /* --- コンテンツのパネル --- */
         .container {
             max-width: 800px;
             width: 100%;
@@ -106,6 +103,7 @@
             z-index: 1;
         }
 
+        /* --- ヘッダー --- */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -125,6 +123,7 @@
             margin-top: 10px;
         }
         
+        /* --- 注意書き --- */
         .info-box {
             background: transparent;
             border: none;
@@ -136,6 +135,7 @@
             font-size: 0.95em;
         }
 
+        /* --- MBTI選択フォーム --- */
         .mbti-form h2 {
             font-family: 'Shippori Mincho', serif;
             font-size: 1.4em;
